@@ -1,0 +1,29 @@
+<header class="flex justify-between items-center p-4 bg-gray-800 text-white">
+    <h1 class="text-2xl font-bold">Gestor</h1>
+    <nav>
+        <ul class="flex space-x-4">
+            <li class="relative">
+                <a href="/home" class="hover:text-gray-400 active:text-blue-500" [ngClass]="{'text-blue-500': isActive('home')}" (click)="setActive('home')">Home</a>
+            </li>
+            <li class="relative">
+                <a href="/newRequest" class="hover:text-gray-400 active:text-blue-500" [ngClass]="{'text-blue-500': isActive('newRequester')}" (click)="setActive('newRequester')">New Requester</a>
+            </li>
+            <li class="relative">
+                <a href="/admin" class="hover:text-gray-400 active:text-blue-500" [ngClass]="{'text-blue-500': isActive('admin')}" (click)="setActive('admin')">Admin</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="relative">
+        <p *ngIf="user" class="cursor-pointer hover:text-gray-400" (click)="toggleDropdown()">{{ user.name }} {{ user.role }}</p>
+        <nav *ngIf="isDropdownOpen" class="absolute right-0 mt-2 w-40 bg-gray-700 rounded-md shadow-lg z-10">
+            <ul class="py-2">
+                <li>
+                    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-600">Settings</a>
+                </li>
+                <li>
+                    <button class="w-full text-start block px-4 py-2 text-white hover:bg-gray-600" (click)="logout()" >Logout</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

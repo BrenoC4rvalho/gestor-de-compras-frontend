@@ -25,3 +25,22 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+https://github.com/LeticiaCordeiro/3213-jornada-milhas-projeto-base/blob/main/src/app/core/services/autenticacao.service.ts
+
+INSERT INTO users (name, password) VALUES ('admin', '$2a$12$PY0bbH5OQJuiLepgsFqsQuqHmTBRxouwTMFeJs.LegUNEg2OQ7RBi
+');
+
+INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
+
+$2a$10$Sb2BcglIzpVHWmiURcWMQeSvdgRm0LyJWH80vqJ8ztcUARadkxHES
+
+criei uma aplicaca em spriboot, um gestor de compras, estou fazendo o frontend em angular 18 com tailwind, ja criei o login, esta funcional, agora preciso criar o resto da aplicacao, tem algumas regras:
+
+somente admin pode criar novo usuario
+qualquer usuario pode criar requisicao
+todos os usuarios podem ver requisicao
+so pode assinar uma requisicao admin ou approver, e quem fez a requisicao nao pode assinar
+so pode alterar uma requisicao assinada admin
+
+preciso que voce crie um prompt para eu terminar de gerar esse frontend, preciso de todos os comandos tambem, necessario
