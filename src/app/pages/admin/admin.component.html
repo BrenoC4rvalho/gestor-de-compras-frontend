@@ -1,2 +1,84 @@
 <app-header></app-header>
-<p>admin works!</p>
+
+
+<main>
+    
+    <div class="container mx-auto p-4">
+        
+        <h1 class="text-2xl font-bold mb-4">
+            User List
+        </h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div 
+                *ngFor="let user of users"
+                class="bg-white p-4 rounded-lg shadow flex flex-col items-center"
+            >
+            
+                <img alt="Foto de perfil de uma pessoa sorrindo" class="w-12 h-12 rounded-full mb-4" height="50" src="https://storage.googleapis.com/a1aa/image/7jQAh9lGqAZFAReAyethH4prBqbT9ekaeYAwox23bd3HWaiPB.jpg" width="50"/>
+                <h2 class="text-lg font-semibold">
+                    {{ user.name }}
+                </h2>
+                <p class="text-gray-600 mb-4">
+                    {{ user.role }}
+                </p>
+                <div class="flex space-x-2">
+                    <button class="text-blue-500 hover:text-blue-700">
+                        edit
+                    </button>
+                    <button class="text-red-500 hover:text-red-700">
+                        delete
+                    </button>
+                </div>
+            </div>
+            <ng-template #noUsers>
+                <p class="text-gray-600">No users found.</p>
+            </ng-template>
+        </div>
+
+        <h1 class="text-2xl font-bold mb-4 mt-4">Create User</h1>
+        <form (ngSubmit)="onSubmit()" class="bg-white p-4 rounded-lg shadow">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+                <input 
+                    [(ngModel)]="newUser.name" 
+                    name="name" 
+                    class="border rounded w-full py-2 px-3 text-gray-700" 
+                    required 
+                    type="text" 
+                    placeholder="Enter user name">
+            </div>
+            <div class="mb-4">
+                <label for="role" class="block text-gray-700 font-bold mb-2">Role</label>
+                <select 
+                    id="role" 
+                    [(ngModel)]="newUser.role" 
+                    name="role" 
+                    class="border rounded w-full py-2 px-3 text-gray-700" 
+                    required>
+                    <option *ngFor="let role of roleNames" [value]="role">
+                        {{ role }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 font-bold mb-2">Password</label>
+                <input 
+                    [(ngModel)]="newUser.password" 
+                    name="password" 
+                    class="border rounded w-full py-2 px-3 text-gray-700" 
+                    required 
+                    type="text" 
+                    placeholder="Enter user password">
+            </div>
+            <button 
+                type="submit" 
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Create User
+            </button>
+        </form>
+
+
+    </div>   
+
+
+</main>

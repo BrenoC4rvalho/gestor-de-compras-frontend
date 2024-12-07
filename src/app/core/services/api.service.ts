@@ -4,6 +4,7 @@ import { CreateRequest } from '../types/CreateRequest';
 import { Observable } from 'rxjs';
 import { CreateUser } from '../types/CreateUser';
 import { User } from '../types/User';
+import { Request } from '../types/Request';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,15 @@ export class ApiService {
     )
   }
 
+  getAllUsers(token: String): Observable<User[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User[]>(
+      `${this.apiUrl}/admin/user`,
+      { headers }
+    )
+  }
+
   recoveryUser(token: String): Observable<User> {
-    console.log('token na api', token)
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<User>(
       `${this.apiUrl}/recoveryUser`,

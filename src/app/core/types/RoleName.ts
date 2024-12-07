@@ -2,4 +2,5 @@ export enum RoleName {
     ROLE_ADMIN = 'ROLE_ADMIN',
     ROLE_APPROVER = 'ROLE_APPROVER',
     ROLE_REQUESTER = 'ROLE_REQUESTER'
+    
 }

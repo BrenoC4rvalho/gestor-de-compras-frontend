@@ -26,7 +26,6 @@ export class HeaderComponent {
 
   loadUser() {
     const token = this.authService.getToken()
-    console.log(token)
     if(token) {
       this.apiService.recoveryUser(token).subscribe({
         next: (user: User) => {
