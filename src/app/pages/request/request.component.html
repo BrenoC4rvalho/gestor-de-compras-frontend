@@ -8,7 +8,7 @@
         <p><strong>Price:</strong> ${{ request.price || 'N/A' }}</p>
         <p><strong>Requester Name:</strong> {{ request.requesterName || 'N/A' }}</p>
         <p><strong>Approver Name:</strong> {{ request.approverName || 'N/A' }}</p>
-        <p><strong>Signature:</strong> {{ request.signature || 'N/A' }}</p>
+        <p><strong>Signature:</strong> <img [src]="request.signature" /> </p>
         <p><strong>Signature Date:</strong> {{ request.signatureDate || 'N/A' }}</p>
         <p><strong>Created At:</strong> {{ request.createAt || 'N/A' }}</p>
         <p><strong>Max Signature Date:</strong> {{ request.maxSignatureDate || 'N/A' }}</p>

@@ -32,6 +32,9 @@ export class RequestComponent {
       this.apiService.getRequestById(id, token).subscribe({
         next: (request: Request) => {
           this.request = request
+          if(this.request.signature) {
+            this.request.signature = this.addPrefixToBase64(this.request.signature)       
+          }
         },
         error: (err) => {
           console.log(err)
@@ -45,14 +48,27 @@ export class RequestComponent {
     signaturePad.openSignatureModal();
   }
 
+  cleanBase64Data(signatureWithPrefix: string) {
+    // Remove o prefixo "data:image/png;base64,"
+    return signatureWithPrefix.split(",")[1];
+  }
+
+  addPrefixToBase64(base64String: string): string {
+    const base64Prefix = 'data:image/png;base64,';
+    return base64Prefix + base64String;
+  }
+
   handleSignatureSaved(signature: string) {
     this.signatureBase64 = signature;
     const token = this.authService.getToken()
 
     if(token && this.request) {
-      this.apiService.signatureRequest(this.request.id, token, this.signatureBase64).subscribe({
+
+      this.apiService.signatureRequest(this.request.id, token, this.cleanBase64Data(this.signatureBase64)).subscribe({
         next: (request: Request) => {
           this.request = request
+          if(this.signatureBase64)
+            this.request.signature = this.signatureBase64
         },
         error: (err) => {
           console.log(err)

@@ -82,10 +82,18 @@ export class ApiService {
     )
   }
 
-  signatureRequest(id: number, token: string, signatureRequestDto: String): Observable<Request> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `${this.apiUrl}/approver/${id}`;
-    return this.http.patch<Request>(url, signatureRequestDto, { headers });
+  signatureRequest(id: number, token: string, signatureRequest: String): Observable<Request> {
+    console.log('entrei no signature', id, signatureRequest)
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.patch<Request>(
+      `${this.apiUrl}/request/approver/${id}`, 
+      { signature: signatureRequest }, 
+      { headers }
+    );
   }
 
 
