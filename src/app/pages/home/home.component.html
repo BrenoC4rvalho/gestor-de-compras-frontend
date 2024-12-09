@@ -19,17 +19,38 @@
                 <p class="text-gray-800 font-bold mb-2">Price: ${{ request.price }}</p>
                 <p class="text-gray-600 mb-2">Requester: {{ request.requesterName }}</p>
             </label>
+            <div class="flex space-x-2 justify-end">
+              <button 
+                class="text-blue-500 hover:text-blue-700"
+                [routerLink]="['/request', request.id]"
+              >
+                  view
+              </button>
+              <button 
+                class="text-red-500 hover:text-red-700"
+                (click)="deleteRequest(request.id)"
+                >
+                  delete
+              </button>
+          </div>
         </div>
           
       </div>
       <ng-template #noRequests>
         <p class="text-gray-600">No requests available.</p>
       </ng-template>
-  
+      
+      <!-- Button to trigger PDF generation -->
       <div class="mt-4 text-center">
-        <button 
+        <app-signature-pad
+          #signaturePad
+          (signatureSaved)="handleSignatureSaved($event)"
+        ></app-signature-pad>
+  
+        <button
           class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-          (click)="generatePDF()">
+          (click)="openSignatureModal(signaturePad)"
+        >
           Generate PDF
         </button>
       </div>

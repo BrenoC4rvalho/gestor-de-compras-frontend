@@ -44,3 +44,5 @@ so pode assinar uma requisicao admin ou approver, e quem fez a requisicao nao po
 so pode alterar uma requisicao assinada admin
 
 preciso que voce crie um prompt para eu terminar de gerar esse frontend, preciso de todos os comandos tambem, necessario
+
+https://pdf-lib.js.org/docs/api/#signatureappearanceprovider

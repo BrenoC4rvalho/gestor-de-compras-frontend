@@ -1,0 +1,18 @@
+<div *ngIf="showSignatureModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-4 rounded-lg shadow-md min-w-max">
+      <h2 class="text-lg font-semibold mb-2">Add Your Signature</h2>
+      <canvas #signatureCanvas width="400" height="200" class="border mb-4"></canvas>
+      <div class="flex justify-between">
+        <button 
+          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          (click)="clearSignature()">
+          Clear
+        </button>
+        <button 
+          class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          (click)="saveSignature()">
+          Save Signature
+        </button>
+      </div>
+    </div>
+</div>

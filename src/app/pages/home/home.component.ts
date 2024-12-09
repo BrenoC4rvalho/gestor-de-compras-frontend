@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HeaderComponent } from "../../shared/header/header.component";
 import { ApiService } from '../../core/services/api.service';
 import { AuthService } from '../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Request } from '../../core/types/Request';
 import { degrees, PDFDocument, rgb } from 'pdf-lib';
+import { SignaturePadComponent } from '../../shared/signature-pad/signature-pad.component';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, CommonModule],
+  imports: [HeaderComponent, CommonModule, SignaturePadComponent, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -17,6 +19,7 @@ export class HomeComponent {
 
     requests: Request[] | null = null
     selectedRequests: Request[] = []
+    signatureBase64: string | null = null
 
     constructor(private authService: AuthService, private apiService: ApiService) {}
 
@@ -41,6 +44,23 @@ export class HomeComponent {
 
     }
 
+    deleteRequest(id: number) {
+      const token = this.authService.getToken()
+      if(token) {
+        this.apiService.deleteRequest(id, token).subscribe({
+          next: () => {
+            alert('delete request success')
+            if(this.requests !== null)
+              this.requests = this.requests.filter(request => request.id !== id);
+          },
+          error: (err) => {
+            console.log(err)
+            alert('delete error')
+          }
+        })
+      }
+    }
+
     toggleSelection(request: Request) {
       const index = this.selectedRequests.findIndex((r) => r.id === request.id)
       if (index >= 0) {
@@ -48,6 +68,15 @@ export class HomeComponent {
       } else {
         this.selectedRequests.push(request)
       }
+    }
+
+    openSignatureModal(signaturePad: SignaturePadComponent) {
+      signaturePad.openSignatureModal();
+    }
+
+    handleSignatureSaved(signature: string) {
+      this.signatureBase64 = signature;
+      this.generatePDF();
     }
 
     async generatePDF() {
@@ -65,22 +94,6 @@ export class HomeComponent {
       page.drawText('Selected Requests', { x: 50, y: yPosition, size: 18, color: rgb(0, 0, 0) });
       yPosition -= 30;
 
-      const jpgUrl = 'https://pdf-lib.js.org/assets/cat_riding_unicorn.jpg'
-      const jpgImageBytes = await fetch(jpgUrl).then((res) => res.arrayBuffer())
-
-      const jpgImage = await pdfDoc.embedJpg(jpgImageBytes)
-      const jpgDims = jpgImage.scale(0.5)
-
-
-      // page.drawImage(jpgImage, {
-      //   x: 60,
-      //   y: 400,
-      //   width: jpgDims.width,
-      //   height: jpgDims.height,
-      //   //rotate: degrees(30),
-      //   opacity: 0.75,
-      // })
-  
       this.selectedRequests.forEach((request, index) => {
         if (yPosition < 50) {
           page.drawText('(Page truncated)', { x: 50, y: 30, size: 10, color: rgb(1, 0, 0) });
@@ -93,6 +106,14 @@ export class HomeComponent {
         );
         yPosition -= 20;
       });
+
+      if (this.signatureBase64) {
+        page.drawText('assinatura', { x: 50, y: yPosition, size: 12, color: rgb(0,0,0)})
+        const signatureBytes = await fetch(this.signatureBase64).then((res) => res.arrayBuffer());
+        const signatureImage = await pdfDoc.embedPng(signatureBytes);
+        page.drawImage(signatureImage, { x: 50, y: yPosition - 100, width: 200, height: 50 });
+      }
+  
   
       const pdfBytes = await pdfDoc.save();
 

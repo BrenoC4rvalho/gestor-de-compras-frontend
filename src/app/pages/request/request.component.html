@@ -1,0 +1,30 @@
+<app-header></app-header>
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Request Details</h1>
+    <div *ngIf="request;">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p><strong>Title:</strong> {{ request.title }}</p>
+        <p><strong>Description:</strong> {{ request.description || 'N/A' }}</p>
+        <p><strong>Price:</strong> ${{ request.price || 'N/A' }}</p>
+        <p><strong>Requester Name:</strong> {{ request.requesterName || 'N/A' }}</p>
+        <p><strong>Approver Name:</strong> {{ request.approverName || 'N/A' }}</p>
+        <p><strong>Signature:</strong> {{ request.signature || 'N/A' }}</p>
+        <p><strong>Signature Date:</strong> {{ request.signatureDate || 'N/A' }}</p>
+        <p><strong>Created At:</strong> {{ request.createAt || 'N/A' }}</p>
+        <p><strong>Max Signature Date:</strong> {{ request.maxSignatureDate || 'N/A' }}</p>
+        <div class="mt-4 text-center">
+          <app-signature-pad
+            #signaturePad
+            (signatureSaved)="handleSignatureSaved($event)"
+          ></app-signature-pad>
+    
+          <button
+            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            (click)="openSignatureModal(signaturePad)"
+          >
+            Signature
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
