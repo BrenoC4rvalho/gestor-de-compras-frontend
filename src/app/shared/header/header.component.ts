@@ -4,6 +4,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { ApiService } from '../../core/services/api.service';
 import { User } from '../../core/types/User';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RoleName } from '../../core/types/RoleName';
 
 @Component({
   selector: 'app-header',
@@ -37,6 +38,10 @@ export class HeaderComponent implements OnInit {
         }
       });
     }
+  }
+
+  isAdmin(): boolean {
+    return this.user?.role === RoleName.ROLE_ADMIN
   }
 
   toggleDropdown() {

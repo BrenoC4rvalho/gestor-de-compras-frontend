@@ -20,7 +20,7 @@
                     New Requester
                 </a>
             </li>
-            <li>
+            <li *ngIf="isAdmin()">
                 <a 
                     routerLink="/admin" 
                     routerLinkActive="text-blue-500" 
