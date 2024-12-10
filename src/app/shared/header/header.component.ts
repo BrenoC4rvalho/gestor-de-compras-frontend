@@ -1,52 +1,42 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { ApiService } from '../../core/services/api.service';
 import { User } from '../../core/types/User';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-
-  activePage: string = 'home';
+export class HeaderComponent implements OnInit {
   isDropdownOpen: boolean = false;
-
   user: User | null = null;
-  
-  constructor(private authService: AuthService, private apiService: ApiService) {}
-  
+
+  constructor(
+    private authService: AuthService,
+    private apiService: ApiService
+  ) {}
+
   ngOnInit() {
-    this.loadUser()
+    this.loadUser();
   }
 
   loadUser() {
-    const token = this.authService.getToken()
-    if(token) {
+    const token = this.authService.getToken();
+    if (token) {
       this.apiService.recoveryUser(token).subscribe({
         next: (user: User) => {
-          this.user = user
+          this.user = user;
         },
         error: (err) => {
-          console.log("Error in load user")
+          console.log('Error in load user');
         }
-      })
+      });
     }
-  }
-
-  setActive(page: string) {
-    this.activePage = page;
-    this.isDropdownOpen = false; // Fecha o dropdown ao mudar de página
-  }
-
-  
-
-  isActive(page: string): boolean {
-    return this.activePage === page;
   }
 
   toggleDropdown() {
@@ -56,6 +46,4 @@ export class HeaderComponent {
   logout() {
     this.authService.logout();
   }
-
 }
-
