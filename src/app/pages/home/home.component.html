@@ -3,7 +3,9 @@
 <main>
     <div class="container mx-auto p-4">
       <h1 class="text-2xl font-bold mb-4">Request List</h1>
+      
       <div *ngIf="requests?.length; else noRequests" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
         <div *ngFor="let request of requests" class="bg-white p-4 rounded-lg shadow">
             <label>
                 <div class="flex items-center mb-2">
@@ -34,12 +36,14 @@
               </button>
           </div>
         </div>
-          
+
       </div>
+      
       <ng-template #noRequests>
         <p class="text-gray-600">No requests available.</p>
       </ng-template>
       
+
       <!-- Button to trigger PDF generation -->
       <div class="mt-4 text-center">
         <app-signature-pad

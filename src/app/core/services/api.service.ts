@@ -76,10 +76,12 @@ export class ApiService {
 
   getAllRequests(token: string): Observable<Request[]> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Request[]>(
+    let res = this.http.get<Request[]>(
       `${this.apiUrl}/request`,
       { headers }
     )
+    console.log(res)
+    return res
   }
 
   signatureRequest(id: number, token: string, signatureRequest: String): Observable<Request> {

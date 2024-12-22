@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Request } from '../../core/types/Request';
 import { degrees, PDFDocument, rgb } from 'pdf-lib';
 import { SignaturePadComponent } from '../../shared/signature-pad/signature-pad.component';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +19,7 @@ export class HomeComponent {
 
     requests: Request[] | null = null
     selectedRequests: Request[] = []
+
     signatureBase64: string | null = null
 
     constructor(private authService: AuthService, private apiService: ApiService) {}
@@ -32,7 +33,6 @@ export class HomeComponent {
       if(token) {
         this.apiService.getAllRequests(token).subscribe({
           next: (requests: Request[]) => {
-            console.log(requests)
             this.requests = requests;
           },
           error: (err) => {
